@@ -4,7 +4,9 @@ use byteorder::{BigEndian, ReadBytesExt, WriteBytesExt};
 
 use std::io;
 use std::io::prelude::*;
+use std::sync::Arc;
 
+use proto::{PacketSource, PacketSink};
 use types::Var;
 
 /// A trait used for data which can be encoded/decoded as is.
@@ -79,6 +81,11 @@ macro_rules! packets {
         #[derive(Debug)]
         pub enum Packet {
             $($name($name)),*
+        }
+
+        #[derive(Debug)]
+        pub enum PacketArc {
+            $($name(Arc<$name>)),*
         }
 
         impl PacketRead for Packet {
